@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Движение</string>
+    <!-- Menu titles-->
+    <string name="mi_phone_number">Номер телефона</string>
+    <string name="mi_logging">Логгирование</string>
+    <string name="set_phone_number">Задайте номер телефона</string>
+
+    <!-- dialog buttons-->
+    <string name="btn_ok">Сохранить</string>
+    <string name="btn_cancel">Отменить</string>
+</resources>

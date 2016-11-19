@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Movement</string>
+    <!-- Menu titles-->
+    <string name="mi_phone_number">Phone number</string>
+    <string name="mi_logging">Logging</string>
+
+    <!-- Coordinate -->
+    <string name="x_axis">X Axis</string>
+    <string name="y_axis">Y Axis</string>
+    <string name="z_axis">Z Axis</string>
+
+    <string name="set_phone_number">Set phone number</string>
+
+    <!-- dialog buttons-->
+    <string name="btn_ok">Ok</string>
+    <string name="btn_cancel">Cancel</string>
 </resources>

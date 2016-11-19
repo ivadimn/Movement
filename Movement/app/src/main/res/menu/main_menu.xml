@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/mi_phone_number_id"
+        android:title="@string/mi_phone_number"></item>
+    <item android:id="@+id/mi_logging_id"
+        android:title="@string/mi_logging"
+        android:checkable="true"
+        android:checked="false"></item>
+
+</menu>
