@@ -5,4 +5,6 @@
     <color name="colorAccent">#FF4081</color>
 
     <!-- custom colors-->
+    <color name="color_pressed">#8ee77a</color>
+    <color name="color_unpressed">#c3c7c3</color>
 </resources>

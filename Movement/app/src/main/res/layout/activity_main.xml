@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_weight="7"
-            android:text="56.6"/>
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_weight="7"
-            android:text="56.6"/>
+            />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -67,20 +67,18 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_weight="7"
-            android:text="56.6"/>
+            />
     </LinearLayout>
-
-
-
-
-
-
-    <TextView
-        android:id="@+id/tvText"
+    <ToggleButton
+        android:id="@+id/btn_turn_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"/>
-
-
-
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_gravity="center"
+        android:text="@string/btn_turn"
+        android:textOn="@string/turn_off"
+        android:textOff="@string/turn_on"
+        android:checked="false"
+        android:background="@drawable/btn_fon"
+        android:onClick="onTurnClick"/>
 </LinearLayout>

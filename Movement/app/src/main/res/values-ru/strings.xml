@@ -9,4 +9,8 @@
     <!-- dialog buttons-->
     <string name="btn_ok">Сохранить</string>
     <string name="btn_cancel">Отменить</string>
+    <!-- Button text -->
+    <string name="turn_on">Запустить</string>
+    <string name="turn_off">Остановить</string>
+    <string name="btn_turn">Вкл./Выкл</string>
 </resources>

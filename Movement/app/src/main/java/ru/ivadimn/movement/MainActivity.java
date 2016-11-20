@@ -11,7 +11,9 @@ import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -27,14 +29,17 @@ public class MainActivity extends AppCompatActivity implements Dlgable {
 
     public static final String TAG_PHONE_NUMBER = "PHONE_NUMBER";
     public static final String TAG_LOGGING = "LOGGING";
-    private final int TIMEOUT = 1000;
+    public static final String TAG_TURN = "TURN";
+    private final int TIMEOUT = 800;
 
     private String phone_number;
     private boolean logging = false;
+    private boolean turn = false;
     private String valuesInfo;
     private TextView tvXAxis;
     private TextView tvYAxis;
     private TextView tvZAxis;
+    private ToggleButton btnTurn;
     private SensorManager sensorManager;
     private Sensor sensorLinAccel;
     float[] valuesLinAccel = new float[3];
@@ -47,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements Dlgable {
         tvXAxis = (TextView) findViewById(R.id.tv_x_axis_id);
         tvYAxis = (TextView) findViewById(R.id.tv_y_axis_id);
         tvZAxis = (TextView) findViewById(R.id.tv_z_axis_id);
+        btnTurn = (ToggleButton) findViewById(R.id.btn_turn_id);
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorLinAccel = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
         Log.d(TAG, "onCreate was worked");
@@ -55,12 +61,14 @@ public class MainActivity extends AppCompatActivity implements Dlgable {
     protected void onResume() {
         super.onResume();
         restoreData();
-        turnOn();
+        if (turn)
+            turnOn();
     }
     @Override
     protected void onPause() {
         super.onPause();
-        turnOff();
+        if (turn)
+            turnOff();
         saveData();
     }
     @Override
@@ -88,10 +96,15 @@ public class MainActivity extends AppCompatActivity implements Dlgable {
         return String.format("%1$.1f\t\t%2$.1f\t\t%3$.1f", values[0], values[1],
                 values[2]);
     }
-    void showInfo() {
+    private void showInfo() {
         tvXAxis.setText(String.format("%1$.1f", valuesLinAccel[0]));
         tvYAxis.setText(String.format("%1$.1f", valuesLinAccel[1]));
         tvZAxis.setText(String.format("%1$.1f", valuesLinAccel[2]));
+    }
+    private void clearText() {
+        tvXAxis.setText("");
+        tvYAxis.setText("");
+        tvZAxis.setText("");
     }
 
     SensorEventListener listener = new SensorEventListener() {
@@ -111,23 +124,25 @@ public class MainActivity extends AppCompatActivity implements Dlgable {
         smsManager.sendTextMessage(phone_number, null, TEXT_MESSAGE, null, null);
     }
     public void reaction() {
-        if (Math.abs(valuesLinAccel[0]) > 2 || Math.abs(valuesLinAccel[1]) > 2 ||
-                Math.abs(valuesLinAccel[2]) > 2) {
+        if (Math.abs(valuesLinAccel[0]) > 1.5 || Math.abs(valuesLinAccel[1]) > 1.5 ||
+                Math.abs(valuesLinAccel[2]) > 1.5) {
             showInfo();
-            //sendSms();
+            sendSms();
         }
     }
     private void restoreData() {
         SharedPreferences preferences = getSharedPreferences(TAG, MODE_PRIVATE);
         phone_number = preferences.getString(TAG_PHONE_NUMBER, TELEPHONE);
         logging = preferences.getBoolean(TAG_LOGGING, false);
+        turn = preferences.getBoolean(TAG_TURN, false);
     }
 
     private void saveData() {
         SharedPreferences preferences = getSharedPreferences(TAG, MODE_PRIVATE);
         SharedPreferences.Editor  editor = preferences.edit();
         editor.putString(TAG_PHONE_NUMBER, phone_number).apply();
-        editor.putBoolean(TAG_LOGGING, logging);
+        editor.putBoolean(TAG_LOGGING, logging).apply();
+        editor.putBoolean(TAG_TURN, turn).apply();
     }
 
     private void turnOn() {
@@ -145,6 +160,7 @@ public class MainActivity extends AppCompatActivity implements Dlgable {
             }
         };
         timer.schedule(task, 0, TIMEOUT);
+
     }
     private void turnOff() {
         sensorManager.unregisterListener(listener);
@@ -167,5 +183,18 @@ public class MainActivity extends AppCompatActivity implements Dlgable {
         PhoneDlg dlg = new PhoneDlg();
         dlg.setArguments(bundle);
         dlg.show(getSupportFragmentManager(), PhoneDlg.TAG);
+    }
+
+    public void onTurnClick(View view) {
+        if (btnTurn.isChecked()) {
+            turnOn();
+            turn = true;
+        }
+        else {
+            if (turn)
+                turnOff();
+            turn = false;
+            clearText();
+        }
     }
 }

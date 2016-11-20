@@ -14,4 +14,10 @@
     <!-- dialog buttons-->
     <string name="btn_ok">Ok</string>
     <string name="btn_cancel">Cancel</string>
+
+    <!-- Button text -->
+    <string name="turn_on">Run</string>
+    <string name="turn_off">Stop</string>
+    <string name="btn_turn">Turm  On/Off</string>
+
 </resources>
